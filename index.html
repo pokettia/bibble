@@ -3,8 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Index - KE4H</title>
-  
+  <title>SPARQL - Notte Stellata</title>
   <style>
     body {
       font-family: sans-serif;
@@ -23,7 +22,7 @@
       margin: 0;
       padding: 0;
       overflow: hidden;
-      background-color: #793aff;
+      background-color: #333;
     }
     nav li {
       float: left;
@@ -34,7 +33,7 @@
       text-align: center;
       padding: 14px 16px;
       text-decoration: none;
-      background-color:#a37eff;
+      background-color: #333;
     }
     nav li a:hover, .dropdown:hover .dropdown-btn {
       background-color: #111;
@@ -57,7 +56,7 @@
       text-align: left;
     }
     nav .dropdown-content a:hover {
-      background-color: #ff9fe4;
+      background-color: #f1f1f1;
     }
     nav .dropdown:hover .dropdown-content {
       display: block;
@@ -66,28 +65,51 @@
       margin-top: 70px;
       padding: 20px;
     }
+    img {
+      max-width: 100%;
+      height: auto;
+      margin-top: 20px;
+    }
   </style>
-
 </head>
 <body>
   <nav>
-  <ul>
-    <li><a href="index.html">Home</a></li>
-    <li class="dropdown">
-      <a href="#" class="dropdown-btn">Menu</a>
-      <div class="dropdown-content">
-        <a href="topic.html">Tema</a>
-        <a href="methodology.html">Metodologia</a>
-        <a href="sparql.html">SPARQL</a>
-        <a href="prompts.html">Prompt</a>
-        <a href="rdf.html">RDF</a>
-        <a href="discussion.html">Discussione</a>
-      </div>
-    </li>
-  </ul>
-</nav>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li class="dropdown">
+        <a href="#" class="dropdown-btn">Menu</a>
+        <div class="dropdown-content">
+          <a href="topic.html">Tema</a>
+          <a href="methodology.html">Metodologia</a>
+          <a href="sparql.html">SPARQL</a>
+          <a href="prompts.html">Prompt</a>
+          <a href="rdf.html">RDF</a>
+          <a href="discussion.html">Discussione</a>
+        </div>
+      </li>
+    </ul>
+  </nav>
   <div class="content">
-    <h1>KE4H Project: Il Liuto Rinascimentale</h1><p><strong>Team:</strong> brigitta sotgiu</p><p><strong>Abstract:</strong> bla bla bla</p>
+    <h2>Query SPARQL – Notte Stellata (Vincent van Gogh)</h2>
+    <p>Utilizzando Wikidata e le informazioni collegate a <a href="https://it.wikipedia.org/wiki/Notte_stellata" target="_blank">Notte stellata</a>, è possibile interrogare il knowledge graph per recuperare dati sull'opera, l'autore e immagini associate.</p>
+
+    <pre><code>SELECT DISTINCT ?painting ?paintingLabel ?creatorLabel ?image WHERE {
+  ?painting wdt:P31 wd:Q3305213 ;       # Istanza di dipinto
+            rdfs:label "The Starry Night"@en ;
+            wdt:P170 ?creator ;         # Autore dell'opera
+            wdt:P18 ?image .            # Immagine dell'opera
+
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "it,en". }
+}
+LIMIT 1</code></pre>
+
+    <p><strong>Risultato atteso:</strong></p>
+    <ul>
+      <li><strong>Opera:</strong> Notte stellata</li>
+      <li><strong>Autore:</strong> Vincent van Gogh</li>
+      <li><strong>Immagine:</strong></li>
+    </ul>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ee/The_Starry_Night.jpg/800px-The_Starry_Night.jpg" alt="Notte Stellata - Vincent van Gogh">
   </div>
 </body>
 </html>
